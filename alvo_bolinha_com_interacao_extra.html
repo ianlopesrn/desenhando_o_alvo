@@ -1,8 +1,7 @@
 <canvas width="600" height="400"></canvas>
 
 <script>
-
-    var tela = document.querySelector('canvas');
+	var tela = document.querySelector('canvas');
     var pincel = tela.getContext('2d');
 
     pincel.fillStyle = 'lightgray';
@@ -18,35 +17,45 @@
         pincel.fill();
     }
 
-    desenhaCirculo(300,200, raio + 20, 'red'); 
+    /**
+    * @param {number} x1 Posicao X do clique
+    * @param {number} y1 Posicao Y do clique
+    * @param {number} x2 Posicao X do circulo
+    * @param {number} y2 Posicao Y do circulo
+    * @param {number} r  Raio do circulo
+    */
+    function clicouCirculo(x1, y1, x2, y2, r) {
+      const dx = (x1 - x2) ** 2
+      const dy = (y1 - y2) ** 2
+      return Math.sqrt(dx + dy) < 1 + r
+    }
+
+    desenhaCirculo(300,200, raio + 20, 'red'); // maior círculo
     desenhaCirculo(300,200, raio + 10, 'white');
-    desenhaCirculo(300,200, raio, 'red'); 
+    desenhaCirculo(300,200, raio, 'red'); // menor circulo
 
    function dispara(evento) {
       
       var x = evento.pageX - tela.offsetLeft;
       var y = evento.pageY - tela.offsetTop;
-      
-      if (x<300+raio && x>300-raio && y<200+raio && y>200-raio) {
+
+      if (clicouCirculo(x, y, 300, 200, raio)) {
         alert("Parabéns, você acertou! Você ganhou 30 pontos.");
       }
-     
-     if (x>280 && x<290 || x >310&& x<320 && y>180 && y<190 || y>210 && y<220) {
+      
+      else if (clicouCirculo(x, y, 300, 200, raio + 10)) {
+
         alert("Parabéns, você acertou! Você ganhou 20 pontos.");
      }
-      
+
+     else if (clicouCirculo(x, y, 300, 200, raio + 20)) {
+
+        alert("Parabéns, você acertou! Você ganhou 10 pontos.");
      
-     
-    // X 290 até X 280 && X 310 até X320
-    //  Y 190 até y 180 Y && y 210 até 220
+     } else {
+      alert('Errou sua topeira')
+     }
       
-     // if (x<300+raio && x>300-raio && y<200+raio && y>200-raio) {
-      //  alert("Parabéns, você acertou! Você ganhou 10 pontos.");
-     // }
-      
-   //   else {
-   //     alert("Você errou! Tente acertar o alvo novamente.");
-   //   }
    }
      
    
